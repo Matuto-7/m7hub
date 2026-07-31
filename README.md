@@ -227,7 +227,7 @@ matuto_start() {
 
 ---
 
-## 📅 Diário de bordo
+## 📅 𝕯𝖎á𝖗𝖎𝖔 𝖉𝖊 𝖇𝖔𝖗𝖉𝖔
 
 Esse projeto é atualizado com frequência — o registro abaixo acompanha a evolução real, não só o resultado final.
 
@@ -242,7 +242,7 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 
 ---
 
-## 🧩 Funcionalidades
+## 🧩 𝕱𝖚𝖓𝖈𝖎𝖔𝖓𝖆𝖑𝖎𝖉𝖆𝖉𝖊𝖘
 
 - **Menu interativo** via `fzf`, com busca, navegação por teclado e refresh dedicado (`F5`) sem precisar fechar e reabrir
 - **Header dinâmico**: usuário, hora, data e contagem de sessões ativas, recalculado toda vez que o menu abre
@@ -253,7 +253,7 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 
 ---
 
-## 🏗️ Arquitetura
+## 🏗️ 𝕬𝖗𝖖𝖚𝖎𝖙𝖊𝖙𝖚𝖗𝖆
 
 O hub vive isolado do `.zshrc` — o dotfile principal só faz um `source` num arquivo próprio, mantendo a config do terminal limpa e a aplicação isolada:
 
@@ -284,7 +284,7 @@ fi
 
 ---
 
-## 📡 No radar (o que ainda vem por aí)
+## 📡 𝕹𝖔 𝖗𝖆𝖉𝖆𝖗 (𝖔 𝖖𝖚𝖊 𝖆𝖎𝖓𝖉𝖆 𝖛𝖊𝖒 𝖕𝖔𝖗 𝖆í)
 
 - [ ] Checagem automática de dependências (`fzf`, `tmux`, `figlet`, `lolcat`, `fastfetch`) antes de subir o hub
 - [ ] Parsing de nomes de sessão mais robusto (`tmux list-sessions -F` em vez de `cut`)
@@ -293,7 +293,7 @@ fi
 
 ---
 
-## 🛠️ Stack
+## 🛠️ 𝕾𝖙𝖆𝖈𝖐
 
 Zsh · tmux · fzf · figlet · lolcat · fastfetch
 
