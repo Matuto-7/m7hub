@@ -5,6 +5,26 @@
 # Todas as funções do hub vivem aqui, fora do .zshrc,
 # pra manter o dotfile principal limpo.
 
+check_deps() {
+
+    # roda só uma vez por sessão de terminal
+    [[ -n "$M7_DEPS_CHECKED" ]] && return
+    export M7_DEPS_CHECKED=1
+
+    local deps=(tmux fzf figlet lolcat fastfetch)
+    local missing=()
+
+    for cmd in "${deps[@]}"; do
+        command -v "$cmd" >/dev/null 2>&1 || missing+=("$cmd")
+    done
+
+    if (( ${#missing[@]} > 0 )); then
+        echo "[M7 HUB] Aviso: dependência(s) faltando: ${missing[*]}"
+        echo "[M7 HUB] Algumas funções podem não funcionar corretamente."
+        echo
+    fi
+}
+
 show_banner() {
     clear
     figlet -f slant "matuto-seven" | lolcat
@@ -43,7 +63,7 @@ attach_session() {
 
     local session
 
-    session=$(command tmux ls 2>/dev/null | cut -d: -f1 | fzf)
+    session=$(command tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf)
 
     [[ -z "$session" ]] && return
 
@@ -58,7 +78,7 @@ rename_session() {
     local old_name
     local new_name
 
-    old_name=$(command tmux ls 2>/dev/null | cut -d: -f1 | fzf --prompt="Sessão > ")
+    old_name=$(command tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --prompt="Sessão > ")
 
     [[ -z "$old_name" ]] && return
 
@@ -85,7 +105,7 @@ delete_session() {
     local session
     local confirm
 
-    session=$(command tmux ls 2>/dev/null | cut -d: -f1 | \
+    session=$(command tmux list-sessions -F "#{session_name}" 2>/dev/null | \
         fzf --prompt="Excluir sessão > ")
 
     [[ -z "$session" ]] && return
@@ -187,6 +207,8 @@ matuto_hub() {
 matuto_start() {
 
 [[ -n "$TMUX" ]] && return
+
+    check_deps
 
     while true; do
 
