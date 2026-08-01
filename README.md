@@ -13,7 +13,7 @@ Feito 100% pra uso próprio, do meu jeito. Ainda em sprint diário — o que voc
 
 ---
 
-## 𝕺 𝖖𝖚𝖊 é 𝖎𝖘𝖘𝖔?
+## 🖤 O que é isso
 
 Peguei a ideia clássica de tmux como túnel pro terminal principal e não me contentei em usar do jeito básico. Construí uma camada de controle por cima: um menu que aparece automaticamente, onde eu crio, anexo, renomeio e deleto sessões sem sair do fluxo visual.
 
@@ -25,7 +25,7 @@ Peguei a ideia clássica de tmux como túnel pro terminal principal e não me co
 
 ---
 
-## ⚙️ 𝕮𝖔𝖒𝖔 𝖋𝖚𝖓𝖈𝖎𝖔𝖓𝖆 𝖓𝖆 𝖕𝖗á𝖙𝖎𝖈𝖆
+## ⚙️ Como funciona na prática
 
 ### Criando uma sessão
 
@@ -53,7 +53,7 @@ Depois do banner, você cai num shell normal pra trabalhar. Ao sair dele (`exit`
 
 ---
 
-## 📋 𝕮𝖔𝖓𝖈𝖊𝖕çã𝖔 (PRD)
+## 📋 Visão do Produto (PRD)
 
 ### Problema
 Trabalhar com múltiplas sessões `tmux` exige decorar sintaxe de comando (`tmux new -s`, `tmux attach -t`, `tmux rename-session`, etc). Isso cria fricção no dia a dia de quem abre e fecha terminais o tempo todo, e não escala bem quando o número de sessões ativas cresce.
@@ -89,7 +89,7 @@ Uso pessoal — desenvolvido para o próprio fluxo de trabalho do autor, sem int
 
 ---
 
-## 🔩 𝕰𝖓𝖌𝖊𝖓𝖍𝖆𝖗𝖎𝖆
+## 🔩 Sob o capô
 
 Cada função do `m7hub.zsh` cobre uma responsabilidade específica. Aqui está o que cada uma faz, com o trecho de código correspondente.
 
@@ -227,7 +227,7 @@ matuto_start() {
 
 ---
 
-## 📅 𝕯𝖎á𝖗𝖎𝖔 𝖉𝖊 𝖇𝖔𝖗𝖉𝖔
+## 📅 Diário de bordo
 
 Esse projeto é atualizado com frequência — o registro abaixo acompanha a evolução real, não só o resultado final.
 
@@ -237,12 +237,13 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 | 30/07/2026 | Separação da lógica do hub para fora do `.zshrc`, isolada em `m7hub.zsh` |
 | 30/07/2026 | Correção de escopo de variável (`REPLY` → `M7_REPLY`) para evitar conflito com `read` |
 | 30/07/2026 | Revisão de arquitetura: identificado e revertido uso de `exec zsh` que quebrava o retorno automático ao menu |
+| 01/08/2026 | Sprint: checagem automática de dependências (`check_deps`) e parsing de sessão mais robusto (`tmux list-sessions -F`) |
 
 > Esse quadro vai crescendo junto com o projeto — cada sprint novo entra aqui.
 
 ---
 
-## 🧩 𝕱𝖚𝖓𝖈𝖎𝖔𝖓𝖆𝖑𝖎𝖉𝖆𝖉𝖊𝖘
+## 🧩 Funcionalidades
 
 - **Menu interativo** via `fzf`, com busca, navegação por teclado e refresh dedicado (`F5`) sem precisar fechar e reabrir
 - **Header dinâmico**: usuário, hora, data e contagem de sessões ativas, recalculado toda vez que o menu abre
@@ -253,7 +254,7 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 
 ---
 
-## 🏗️ 𝕬𝖗𝖖𝖚𝖎𝖙𝖊𝖙𝖚𝖗𝖆
+## 🏗️ Arquitetura
 
 O hub vive isolado do `.zshrc` — o dotfile principal só faz um `source` num arquivo próprio, mantendo a config do terminal limpa e a aplicação isolada:
 
@@ -284,16 +285,16 @@ fi
 
 ---
 
-## 📡 𝕹𝖔 𝖗𝖆𝖉𝖆𝖗 (𝖔 𝖖𝖚𝖊 𝖆𝖎𝖓𝖉𝖆 𝖛𝖊𝖒 𝖕𝖔𝖗 𝖆í)
+## 📡 No radar (o que ainda vem por aí)
 
-- [ ] Checagem automática de dependências (`fzf`, `tmux`, `figlet`, `lolcat`, `fastfetch`) antes de subir o hub
-- [ ] Parsing de nomes de sessão mais robusto (`tmux list-sessions -F` em vez de `cut`)
+- [x] Checagem automática de dependências (`fzf`, `tmux`, `figlet`, `lolcat`, `fastfetch`) antes de subir o hub
+- [x] Parsing de nomes de sessão mais robusto (`tmux list-sessions -F` em vez de `cut`)
 - [ ] Mais temas visuais
 - [ ] Possível `install.sh` no futuro — sem pressa, isso aqui nasceu pra ser meu, não produto
 
 ---
 
-## 🛠️ 𝕾𝖙𝖆𝖈𝖐
+## 🛠️ Stack
 
 Zsh · tmux · fzf · figlet · lolcat · fastfetch
 
