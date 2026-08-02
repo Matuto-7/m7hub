@@ -142,6 +142,26 @@ matuto_hub() {
 
     local WIDTH=$(tput cols)
 
+    # calcula a largura visual real de uma string,
+    # compensando emojis que ocupam 2 colunas na tela
+    # mas contam como 1 caractere pro shell
+    local -A M7_WIDE_CHARS=(
+        "👤" 1 "🚀" 1 "🕒" 1 "📅" 1 "🖥" 1
+    )
+    vwidth() {
+        local str="$1"
+        local extra=0
+        local ch
+        for ch in "${(@k)M7_WIDE_CHARS}"; do
+            local tmp="$str"
+            while [[ "$tmp" == *"$ch"* ]]; do
+                extra=$((extra + 1))
+                tmp="${tmp/$ch/}"
+            done
+        done
+        echo $(( ${#str} + extra ))
+    }
+
     local DATE=$(date '+%d/%m/%Y')
     local TIME=$(date '+%H:%M')
     local SESSIONS=$(command tmux ls 2>/dev/null | wc -l | tr -d ' ')
@@ -150,31 +170,27 @@ matuto_hub() {
     local INFO="👤 $USER"
     local VERSION="🚀 M7 HUB v1.0"
 
-    printf "${RED}┌%*s┐${R}\n" $((WIDTH-2)) "" | tr ' ' '─'
+    printf "${RED}┌%s┐${R}\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
-    local SPACES=$(( WIDTH - ${#INFO} - ${#VERSION} - 8 ))
+    # a borda direita é travada na coluna WIDTH via posicionamento
+    # absoluto de cursor — não depende de calcular a largura do texto,
+    # então não desalinha mesmo se a fonte renderizar emoji diferente
+    printf "${RED}│${R}%s" "$INFO"
+    printf "\e[%dG%s" $((WIDTH - $(vwidth "$VERSION") - 1)) "$VERSION"
+    printf "\e[%dG${RED}│${R}\n" "$WIDTH"
 
-    printf "${RED}│${R}%s%*s%s${RED}│${R}\n" \
-    "$INFO" \
-    "$SPACES" "" \
-    "$VERSION"
-    printf "${RED}├%*s┤${R}\n" $((WIDTH-2)) "" | tr ' ' '─'
+    printf "${RED}├%s┤${R}\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
     local LEFT="🕒 $TIME"
     local CENTER="📅 $DATE"
     local RIGHT="🖥 $SESSIONS Session(s)"
 
-    local LEFT_PAD=2
-    local CENTER_POS=$(( (WIDTH - ${#CENTER}) / 2 ))
-    local RIGHT_POS=$(( WIDTH - ${#RIGHT} - 2 ))
+    printf "${RED}│${R}  %s" "$LEFT"
+    printf "\e[%dG%s" $(( (WIDTH - $(vwidth "$CENTER")) / 2 + 1 )) "$CENTER"
+    printf "\e[%dG%s" $((WIDTH - $(vwidth "$RIGHT") - 1)) "$RIGHT"
+    printf "\e[%dG${RED}│${R}\n" "$WIDTH"
 
-    printf "%*s%s%*s%s%*s%s\n\n" \
-    "$LEFT_PAD" "" \
-    "$LEFT" \
-    $((CENTER_POS - LEFT_PAD - ${#LEFT})) "" \
-    "$CENTER" \
-    $((RIGHT_POS - CENTER_POS - ${#CENTER})) "" \
-    "$RIGHT"
+    printf "${RED}└%s┘${R}\n\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
     RESULT=$(
     printf "%s\n" \
