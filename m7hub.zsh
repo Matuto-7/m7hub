@@ -169,13 +169,15 @@ matuto_hub() {
 
     local INFO="👤 $USER"
     local VERSION="🚀 M7 HUB v1.0"
+    local FADE="▓▒░"
+    local POWER_ARROW=$'\ue0b0'
 
     printf "${RED}┌%s┐${R}\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
-    # a borda direita é travada na coluna WIDTH via posicionamento
-    # absoluto de cursor — não depende de calcular a largura do texto,
-    # então não desalinha mesmo se a fonte renderizar emoji diferente
-    printf "${RED}│${R}%s" "$INFO"
+    # o "chip" do usuário sai direto da borda esquerda, com fundo colorido,
+    # dilui com um degradê de blocos (▓▒░) e fecha com a seta powerline —
+    # a borda direita continua travada na coluna WIDTH via cursor absoluto
+    printf "${RED}│${R}${CHIP_BG}${CHIP_FG} %s ${R}${ARROW_FG}%s${POWER_ARROW}${R}" "$INFO" "$FADE"
     printf "\e[%dG%s" $((WIDTH - $(vwidth "$VERSION") - 1)) "$VERSION"
     printf "\e[%dG${RED}│${R}\n" "$WIDTH"
 
