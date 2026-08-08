@@ -239,6 +239,7 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 | 30/07/2026 | Revisão de arquitetura: identificado e revertido uso de `exec zsh` que quebrava o retorno automático ao menu |
 | 01/08/2026 | Sprint: checagem automática de dependências (`check_deps`) e parsing de sessão mais robusto (`tmux list-sessions -F`) |
 | 02/08/2026 | Sprint: sistema de temas (`red`, `matrix`, `blood`) e correção completa da moldura do header — bug do `tr` com UTF-8, borda fechada embaixo, e alinhamento robusto via posicionamento absoluto de cursor |
+| 08/08/2026 | Sprint: chip powerline no header (nome de usuário com fundo colorido, degradê de blocos `▓▒░` e seta powerline fechando a transição pro fundo padrão) |
 
 > Esse quadro vai crescendo junto com o projeto — cada sprint novo entra aqui.
 
