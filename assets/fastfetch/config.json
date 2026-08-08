@@ -1,0 +1,51 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "logo": {
+    "source": "/home/matuto07/yoru.txt",
+    "width": 24,
+    "padding": {
+      "right": 4
+    },
+    "color": {
+      "1": "default"
+    }
+  },
+  "display": {
+    "separator": " ➔ ",
+    "color": "38;5;46"
+  },
+  "modules": [
+    "title",
+    {
+      "type": "custom",
+      "format": "\u001b[38;5;46m┌──────────────────────────────────────────────┐\u001b[0m"
+    },
+    { "type": "os", "key": "│ OS" },
+    { "type": "host", "key": "│ Host" },
+    { "type": "kernel", "key": "│ Kernel" },
+    { "type": "uptime", "key": "│ Uptime" },
+    { "type": "packages", "key": "│ Packages" },
+    { "type": "shell", "key": "│ Shell" },
+    { "type": "display", "key": "│ Display" },
+    { "type": "de", "key": "│ DE" },
+    { "type": "wm", "key": "│ WM" },
+    { "type": "wmtheme", "key": "│ WM Theme" },
+    { "type": "theme", "key": "│ Theme" },
+    { "type": "icons", "key": "│ Icons" },
+    { "type": "terminal", "key": "│ Terminal" },
+    { "type": "terminalfont", "key": "│ Term Font" },
+    { "type": "cpu", "key": "│ CPU" },
+    { "type": "gpu", "key": "│ GPU" },
+    { "type": "memory", "key": "│ Memory" },
+    { "type": "swap", "key": "│ Swap" },
+    { "type": "disk", "key": "│ Disk (/)" },
+    { "type": "battery", "key": "│ Battery" },
+    { "type": "localip", "key": "│ Local IP" },
+    { "type": "locale", "key": "│ Locale" },
+    {
+      "type": "custom",
+      "format": "\u001b[38;5;46m└──────────────────────────────────────────────┘\u001b[0m"
+    },
+    "colors"
+  ]
+}

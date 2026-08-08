@@ -169,30 +169,29 @@ matuto_hub() {
 
     local INFO="👤 $USER"
     local VERSION="🚀 M7 HUB v1.0"
-    local FADE="▓▒░"
     local POWER_ARROW=$'\ue0b0'
 
-    printf "${RED}┌%s┐${R}\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
+    printf "${RED}╭%s╮${R}\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
     # o "chip" do usuário sai direto da borda esquerda, com fundo colorido,
     # dilui com um degradê de blocos (▓▒░) e fecha com a seta powerline —
     # a borda direita continua travada na coluna WIDTH via cursor absoluto
-    printf "${RED}│${R}${CHIP_BG}${CHIP_FG} %s ${R}${ARROW_FG}%s${POWER_ARROW}${R}" "$INFO" "$FADE"
+    printf "${RED}│${R}${CHIP_BG}${CHIP_FG} %s ${R}${ARROW_FG}%s${R}" "$INFO" "$POWER_ARROW"
     printf "\e[%dG%s" $((WIDTH - $(vwidth "$VERSION") - 1)) "$VERSION"
     printf "\e[%dG${RED}│${R}\n" "$WIDTH"
 
     printf "${RED}├%s┤${R}\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
-    local LEFT="🕒 $TIME"
-    local CENTER="📅 $DATE"
-    local RIGHT="🖥 $SESSIONS Session(s)"
-
-    printf "${RED}│${R}  %s" "$LEFT"
-    printf "\e[%dG%s" $(( (WIDTH - $(vwidth "$CENTER")) / 2 + 1 )) "$CENTER"
-    printf "\e[%dG%s" $((WIDTH - $(vwidth "$RIGHT") - 1)) "$RIGHT"
+    # hora, data e sessões viram três chips conectados numa barra
+    # hora, data e sessões viram UMA barra contínua só (mesmo fundo
+    # do início ao fim, sem interrupção), fechando com uma única seta —
+    # assim não sobra "costura" de fundo padrão entre os campos
+    printf "${RED}│${R}"
+    printf "${CHIP_BG}${CHIP_FG} 🕒 %s \e[97m❯${CHIP_FG} 📅 %s \e[97m❯${CHIP_FG} 🖥 %s Session(s) ${R}${ARROW_FG}%s${R}" \
+        "$TIME" "$DATE" "$SESSIONS" "$POWER_ARROW"
     printf "\e[%dG${RED}│${R}\n" "$WIDTH"
 
-    printf "${RED}└%s┘${R}\n\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
+    printf "${RED}╰%s╯${R}\n\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
     RESULT=$(
     printf "%s\n" \
@@ -203,7 +202,7 @@ matuto_hub() {
     "Exit" | fzf \
         --height=40% \
         --layout=reverse \
-        --border \
+        --border=rounded \
         --cycle \
         --pointer="▶" \
         --marker="✓" \
