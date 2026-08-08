@@ -167,28 +167,36 @@ matuto_hub() {
     local SESSIONS=$(command tmux ls 2>/dev/null | wc -l | tr -d ' ')
     [[ "$SESSIONS" -eq 0 ]] && SESSIONS="0"
 
-    local INFO="👤 $USER"
+    # degradê real: hora (claro) → data → sessões → versão (escuro)
+    local INFO="(つ◉益◉)つ cybersecurty M7"
     local VERSION="🚀 M7 HUB v1.0"
     local POWER_ARROW=$'\ue0b0'
+    local TIME_BG=$'\e[48;2;197;12;54m'
+    local DATE_BG=$'\e[48;2;154;5;38m'
+    local SESS_BG=$'\e[48;2;103;15;34m'
+    local VERSION_BG=$'\e[48;2;60;8;20m'
+    local TIME_FG=$'\e[38;2;197;12;54m'
+    local DATE_FG=$'\e[38;2;154;5;38m'
+    local SESS_FG=$'\e[38;2;103;15;34m'
+    local VERSION_FG=$'\e[38;2;60;8;20m'
 
     printf "${RED}╭%s╮${R}\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
-    # o "chip" do usuário sai direto da borda esquerda, com fundo colorido,
-    # dilui com um degradê de blocos (▓▒░) e fecha com a seta powerline —
-    # a borda direita continua travada na coluna WIDTH via cursor absoluto
-    printf "${RED}│${R}${CHIP_BG}${CHIP_FG} %s ${R}${ARROW_FG}%s${R}" "$INFO" "$POWER_ARROW"
-    printf "\e[%dG%s" $((WIDTH - $(vwidth "$VERSION") - 1)) "$VERSION"
+    # o "chip" do usuário usa o mesmo vermelho claro da hora
+    printf "${RED}│${R}${TIME_BG}${CHIP_FG} %s ${R}${TIME_FG}%s${R}" "$INFO" "$POWER_ARROW"
     printf "\e[%dG${RED}│${R}\n" "$WIDTH"
 
     printf "${RED}├%s┤${R}\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
-    # hora, data e sessões viram três chips conectados numa barra
-    # hora, data e sessões viram UMA barra contínua só (mesmo fundo
-    # do início ao fim, sem interrupção), fechando com uma única seta —
-    # assim não sobra "costura" de fundo padrão entre os campos
     printf "${RED}│${R}"
-    printf "${CHIP_BG}${CHIP_FG} 🕒 %s \e[97m❯${CHIP_FG} 📅 %s \e[97m❯${CHIP_FG} 🖥 %s Session(s) ${R}${ARROW_FG}%s${R}" \
-        "$TIME" "$DATE" "$SESSIONS" "$POWER_ARROW"
+    printf "${TIME_BG}${CHIP_FG} 🕒 %s " "$TIME"
+    printf "${TIME_FG}${DATE_BG}${POWER_ARROW}${R}"
+    printf "${DATE_BG}${CHIP_FG} 📅 %s " "$DATE"
+    printf "${DATE_FG}${SESS_BG}${POWER_ARROW}${R}"
+    printf "${SESS_BG}${CHIP_FG} 🖥 %s Session(s) " "$SESSIONS"
+    printf "${SESS_FG}${VERSION_BG}${POWER_ARROW}${R}"
+    printf "${VERSION_BG}${CHIP_FG} %s " "$VERSION"
+    printf "${R}${VERSION_FG}%s${R}" "$POWER_ARROW"
     printf "\e[%dG${RED}│${R}\n" "$WIDTH"
 
     printf "${RED}╰%s╯${R}\n\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
