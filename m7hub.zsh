@@ -146,7 +146,7 @@ matuto_hub() {
     # compensando emojis que ocupam 2 colunas na tela
     # mas contam como 1 caractere pro shell
     local -A M7_WIDE_CHARS=(
-        "👤" 1 "🚀" 1 "🕒" 1 "📅" 1 "🖥" 1
+        "👤" 1 "🚀" 1
     )
     vwidth() {
         local str="$1"
@@ -189,11 +189,15 @@ matuto_hub() {
     printf "${RED}├%s┤${R}\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
     printf "${RED}│${R}"
-    printf "${TIME_BG}${CHIP_FG} 🕒 %s " "$TIME"
+    local ICON_TIME=$'\uf017'
+    local ICON_DATE=$'\uf073'
+    local ICON_SESS=$'\uf108'
+
+    printf "${TIME_BG}${CHIP_FG} ${ICON_TIME} %s " "$TIME"
     printf "${TIME_FG}${DATE_BG}${POWER_ARROW}${R}"
-    printf "${DATE_BG}${CHIP_FG} 📅 %s " "$DATE"
+    printf "${DATE_BG}${CHIP_FG} ${ICON_DATE} %s " "$DATE"
     printf "${DATE_FG}${SESS_BG}${POWER_ARROW}${R}"
-    printf "${SESS_BG}${CHIP_FG} 🖥 %s Session(s) " "$SESSIONS"
+    printf "${SESS_BG}${CHIP_FG} ${ICON_SESS} %s Session(s) " "$SESSIONS"
     printf "${SESS_FG}${VERSION_BG}${POWER_ARROW}${R}"
     printf "${VERSION_BG}${CHIP_FG} %s " "$VERSION"
     printf "${R}${VERSION_FG}%s${R}" "$POWER_ARROW"
@@ -201,13 +205,19 @@ matuto_hub() {
 
     printf "${RED}╰%s╯${R}\n\n" "$(printf '─%.0s' $(seq 1 $((WIDTH-2))))"
 
+    local ICON_CREATE=$'\uf055'
+    local ICON_ATTACH=$'\uf0c1'
+    local ICON_RENAME=$'\uf040'
+    local ICON_DELETE=$'\uf1f8'
+    local ICON_EXIT=$'\uf08b'
+
     RESULT=$(
     printf "%s\n" \
-    "Create Session" \
-    "Attach Session" \
-    "Rename Session" \
-    "Delete Session" \
-    "Exit" | fzf \
+    "${ICON_CREATE}  Create Session" \
+    "${ICON_ATTACH}  Attach Session" \
+    "${ICON_RENAME}  Rename Session" \
+    "${ICON_DELETE}  Delete Session" \
+    "${ICON_EXIT}  Exit" | fzf \
         --height=40% \
         --layout=reverse \
         --border=rounded \
@@ -246,25 +256,25 @@ matuto_start() {
 
         case "$M7_REPLY" in
 
-            "Create Session")
+            $'\uf055''  Create Session')
                 create_session
                 ;;
 
-            "Attach Session")
+            $'\uf0c1''  Attach Session')
                 attach_session
                 ;;
 
-            "Rename Session")
+            $'\uf040''  Rename Session')
                 rename_session
                 continue
                 ;;
 
-            "Delete Session")
+            $'\uf1f8''  Delete Session')
                 delete_session
                 continue
                 ;;
 
-            "Exit")
+            $'\uf08b''  Exit')
                 exit
                 ;;
 

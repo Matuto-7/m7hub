@@ -27,6 +27,14 @@ Peguei a ideia clássica de tmux como túnel pro terminal principal e não me co
 
 ## 👾 𝕮𝖔𝖒𝖔 𝖋𝖚𝖓𝖈𝖎𝖔𝖓𝖆 𝖓𝖆 𝖕𝖗á𝖙𝖎𝖈𝖆
 
+### Header powerline
+
+<p align="center">
+  <img src="assets/powerline-header.png" alt="Header com degradê powerline" width="800">
+</p>
+
+O header usa um degradê real de cores (claro → escuro) unindo usuário, hora, data, sessões e versão numa única barra powerline, com cantos arredondados e ícones monocromáticos no menu.
+
 ### Criando uma sessão
 
 <p align="center">
@@ -240,6 +248,7 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 | 01/08/2026 | Sprint: checagem automática de dependências (`check_deps`) e parsing de sessão mais robusto (`tmux list-sessions -F`) |
 | 02/08/2026 | Sprint: sistema de temas (`red`, `matrix`, `blood`) e correção completa da moldura do header — bug do `tr` com UTF-8, borda fechada embaixo, e alinhamento robusto via posicionamento absoluto de cursor |
 | 08/08/2026 | Sprint: chip powerline no header (nome de usuário com fundo colorido, degradê de blocos `▓▒░` e seta powerline fechando a transição pro fundo padrão) |
+| 09/08/2026 | Sprint: redesign completo do header — degradê real de cores (claro → escuro) unindo usuário, hora, data, sessões e versão numa barra powerline só; cantos arredondados; ícones monocromáticos (Nerd Font) no menu e nos campos do header, substituindo os emojis |
 
 > Esse quadro vai crescendo junto com o projeto — cada sprint novo entra aqui.
 
