@@ -59,6 +59,18 @@ Sempre que você entra num shell de trabalho (depois de criar/anexar uma sessão
 
 Depois do banner, você cai num shell normal pra trabalhar. Ao sair dele (`exit`), o controle volta automaticamente pro menu do hub — sem precisar reabrir nada, sem perder o fluxo.
 
+### Cancelamento com `Esc`
+
+As ações que abrem uma tela secundária também respeitam o mesmo fluxo de navegação do menu: `Esc` cancela a operação e retorna diretamente ao HUB, sem obrigar o usuário a concluir a ação.
+
+<p align="center">
+  <img src="assets/atalhos.png" alt="Atalhos de navegação do M7 HUB" width="800">
+</p>
+
+<p align="center"><i>Atalhos de navegação — <code>Esc</code> cancela e volta ao HUB.</i></p>
+
+Isso vale para **Create Session** e **Attach Session**, mantendo o comportamento coerente entre o menu principal e suas telas internas.
+
 ---
 
 ## 👾 𝖁𝖎𝖘ã𝖔 𝖉𝖔 𝕻𝖗𝖔𝖉𝖚𝖙𝖔 (𝕻𝕽𝕯)
@@ -249,6 +261,7 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 | 02/08/2026 | Sprint: sistema de temas (`red`, `matrix`, `blood`) e correção completa da moldura do header — bug do `tr` com UTF-8, borda fechada embaixo, e alinhamento robusto via posicionamento absoluto de cursor |
 | 08/08/2026 | Sprint: chip powerline no header (nome de usuário com fundo colorido, degradê de blocos `▓▒░` e seta powerline fechando a transição pro fundo padrão) |
 | 09/08/2026 | Sprint: redesign completo do header — degradê real de cores (claro → escuro) unindo usuário, hora, data, sessões e versão numa barra powerline só; cantos arredondados; ícones monocromáticos (Nerd Font) no menu e nos campos do header, substituindo os emojis |
+| 09/08/2026 | Sprint: cancelamento consistente com `Esc` — `Create Session` e `Attach Session` agora permitem cancelar a operação e retornar diretamente ao HUB, mantendo o fluxo de navegação coerente |
 
 > Esse quadro vai crescendo junto com o projeto — cada sprint novo entra aqui.
 
@@ -262,6 +275,7 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 - **CRUD completo de sessões tmux**: criar, anexar, renomear, deletar — com confirmação antes de deletar
 - **Sistema de temas**: cores carregadas de um arquivo de configuração separado
 - **Loop de controle**: sai de uma sessão → volta pro hub automaticamente, sem interrupção do fluxo
+- **Cancelamento por `Esc`**: operações de criação e anexação podem ser canceladas e retornam diretamente ao HUB
 
 ---
 

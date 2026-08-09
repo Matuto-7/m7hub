@@ -43,7 +43,35 @@ create_session() {
     echo "========================================"
     echo
 
-    read "?Nome da sessão: " name
+    local name=""
+    local key
+
+    printf "Nome da sessão: "
+
+    while true; do
+        read -k 1 key
+
+        case "$key" in
+            $'\e')
+                echo
+                return 2
+                ;;
+            $'\n'|$'\r')
+                echo
+                break
+                ;;
+            $'\x7f')
+                if [[ -n "$name" ]]; then
+                    name="${name%?}"
+                    printf '\b \b'
+                fi
+                ;;
+            *)
+                name+="$key"
+                printf "%s" "$key"
+                ;;
+        esac
+    done
 
     [[ -z "$name" ]] && name="${PWD##*/}"
 
@@ -62,10 +90,12 @@ create_session() {
 attach_session() {
 
     local session
+    local fzf_status
 
-    session=$(command tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf)
+    session=$(command tmux list-sessions -F "#{session_name}" 2>/dev/null |         fzf --bind='esc:abort')
+    fzf_status=$?
 
-    [[ -z "$session" ]] && return
+    [[ $fzf_status -ne 0 || -z "$session" ]] && return 2
 
     command tmux attach-session -t "$session"
 
@@ -225,6 +255,8 @@ matuto_hub() {
         --pointer="▶" \
         --marker="✓" \
         --prompt="🔍 Search : " \
+        --border-label=" ↑↓ navegar • Enter selecionar • Esc voltar " \
+        --border-label-pos=bottom \
         --expect=f5
 )
     KEY=$(head -n1 <<< "$RESULT")
@@ -258,10 +290,12 @@ matuto_start() {
 
             $'\uf055''  Create Session')
                 create_session
+                [[ $? -eq 2 ]] && continue
                 ;;
 
             $'\uf0c1''  Attach Session')
                 attach_session
+                [[ $? -eq 2 ]] && continue
                 ;;
 
             $'\uf040''  Rename Session')
