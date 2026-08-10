@@ -45,30 +45,94 @@ create_session() {
 
     local name=""
     local key
+    local seq
+    local cursor=0
 
     printf "Nome da sessão: "
 
     while true; do
-        read -k 1 key
+        read -sk 1 key
 
         case "$key" in
             $'\e')
-                echo
-                return 2
+                # ESC sozinho = cancelar.
+                # ESC [ C/D = setas direita/esquerda.
+                read -sk 1 -t 0.05 seq || {
+                    echo
+                    return 2
+                }
+
+                if [[ "$seq" == "[" ]]; then
+                    read -sk 1 -t 0.05 seq || continue
+
+                    case "$seq" in
+                        C)  # seta direita
+                            (( cursor < ${#name} )) && (( cursor++ ))
+                            ;;
+                        D)  # seta esquerda
+                            (( cursor > 0 )) && (( cursor-- ))
+                            ;;
+                        H)  # Home
+                            cursor=0
+                            ;;
+                        F)  # End
+                            cursor=${#name}
+                            ;;
+                        *)
+                            ;;
+                    esac
+
+                    # Redesenha a linha e reposiciona o cursor.
+                    printf "\rNome da sessão: %s\033[K" "$name"
+                    if (( cursor < ${#name} )); then
+                        printf "\033[%dD" $(( ${#name} - cursor ))
+                    fi
+                else
+                    # ESC não seguido de uma sequência de seta = cancelar.
+                    echo
+                    return 2
+                fi
                 ;;
+
             $'\n'|$'\r')
                 echo
                 break
                 ;;
-            $'\x7f')
-                if [[ -n "$name" ]]; then
-                    name="${name%?}"
-                    printf '\b \b'
+
+            $'\x7f'|$'\x08')
+                # Backspace: remove o caractere à esquerda do cursor.
+                if (( cursor > 0 )); then
+                    if (( cursor == ${#name} )); then
+                        name="${name[1,$((cursor-1))]}"
+                    else
+                        name="${name[1,$((cursor-1))]}${name[$((cursor+1)),-1]}"
+                    fi
+
+                    (( cursor-- ))
+
+                    printf "\rNome da sessão: %s\033[K" "$name"
+                    if (( cursor < ${#name} )); then
+                        printf "\033[%dD" $(( ${#name} - cursor ))
+                    fi
                 fi
                 ;;
+
             *)
-                name+="$key"
-                printf "%s" "$key"
+                # Insere o caractere na posição atual do cursor.
+                if (( cursor == 0 )); then
+                    name="$key$name"
+                elif (( cursor >= ${#name} )); then
+                    name="$name$key"
+                else
+                    name="${name[1,$cursor]}$key${name[$((cursor+1)),-1]}"
+                fi
+
+                (( cursor++ ))
+
+                printf "\rNome da sessão: %s\033[K" "$name"
+                if (( cursor < ${#name} )); then
+                    printf "\033[%dD" $(( ${#name} - cursor ))
+                fi
                 ;;
         esac
     done
@@ -80,13 +144,12 @@ create_session() {
         echo "[ERRO] Já existe uma sessão chamada '$name'."
         echo
         read "?Pressione Enter para voltar..."
-        return
+        return 2
     fi
 
     command tmux new-session -s "$name"
 
 }
-
 attach_session() {
 
     local session
