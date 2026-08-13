@@ -610,6 +610,7 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 | 09/08/2026 | Sprint: redesign completo do header — degradê real de cores (claro → escuro) unindo usuário, hora, data, sessões e versão numa barra powerline só; cantos arredondados; ícones monocromáticos (Nerd Font) no menu e nos campos do header, substituindo os emojis |
 | 09/08/2026 | Sprint: cancelamento consistente com `Esc` — `Create Session` e `Attach Session` agora permitem cancelar a operação e retornar diretamente ao HUB, mantendo o fluxo de navegação coerente |
 | 11/08/2026 | Sprint: redesign do `Attach Session` com preview lateral em tempo real, informações de panes/shell/path, atalhos `↑ ↓`/`Enter`/`Esc` e acabamento visual da interface |
+| 13/08/2026 | Sprint: modularização da arquitetura — separação do M7 HUB em módulos de `core`, `tmux` e `ui`, com `m7hub.zsh` mantido como loader central e preservação do comportamento existente |
 
 > Esse quadro vai crescendo junto com o projeto — cada sprint novo entra aqui.
 
@@ -623,6 +624,7 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 - **CRUD completo de sessões tmux**: criar, anexar, renomear, deletar — com confirmação antes de deletar
 - **Sistema de temas**: cores carregadas de um arquivo de configuração separado
 - **Loop de controle**: sai de uma sessão → volta pro hub automaticamente, sem interrupção do fluxo
+- **Arquitetura modular**: loader central separado de módulos de `core`, gerenciamento `tmux` e interface `ui`
 - **Cancelamento por `Esc`**: operações de criação e anexação podem ser canceladas e retornam diretamente ao HUB
 - **Preview de sessões**: `Attach Session` mostra panes, shell e diretório atual em um painel lateral
 - **Atalhos no Attach**: `↑`/`↓` navegam, `Enter` anexa e `Esc` volta ao HUB
@@ -631,14 +633,23 @@ Esse projeto é atualizado com frequência — o registro abaixo acompanha a evo
 
 ## 👾 𝕬𝖗𝖖𝖚𝖎𝖙𝖊𝖙𝖚𝖗𝖆
 
-O hub vive isolado do `.zshrc` — o dotfile principal só faz um `source` num arquivo próprio, mantendo a config do terminal limpa e a aplicação isolada:
+O hub vive isolado do `.zshrc`. O `m7hub.zsh` funciona como loader central e carrega os módulos por responsabilidade, mantendo a configuração do terminal limpa e a aplicação organizada:
 
 ```
 ~/.config/m7hb/
-├── m7hub.zsh          # todas as funções do hub
+├── m7hub.zsh          # loader central
 ├── config             # variáveis de configuração (tema ativo, etc)
+├── core/
+│   ├── deps.zsh       # dependências
+│   └── start.zsh      # loop de inicialização
+├── tmux/
+│   └── sessions.zsh   # criação, renomeação e remoção de sessões
+├── ui/
+│   ├── attach.zsh     # Attach Sessions + preview
+│   ├── banner.zsh     # banner de abertura
+│   └── menu.zsh       # menu principal
 └── themes/
-    └── *.conf          # arquivos de cor por tema
+    └── *.conf         # arquivos de cor por tema
 ```
 
 No `.zshrc`, fica só isso:
