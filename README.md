@@ -671,6 +671,39 @@ fi
 
 ---
 
+## 👾 𝕭𝖆𝖈𝖐𝖑𝖔𝖌
+
+Visão geral do que já foi entregue, área por área.
+
+| Área | Estado |
+|------|--------|
+| Gerenciamento tmux | ✅ |
+| Create Session | ✅ |
+| Attach Session | ✅ |
+| Rename Session | ✅ |
+| Delete Session | ✅ |
+| Banner | ✅ |
+| Retorno automático ao HUB | ✅ |
+| `Esc` | ✅ |
+| Refresh | ✅ |
+| Sistema de temas | ✅ |
+| Header Powerline | ✅ |
+| Degradê do Header | ✅ |
+| Nerd Fonts | ✅ |
+| Attach Preview | ✅ |
+| Informações de panes | ✅ |
+| Atalhos no Attach | ✅ |
+| Visual do Attach | ✅ |
+| Powerline do Attach | ✅ |
+| Screenshot | ✅ |
+| README | ✅ |
+| Diário de Bordo | ✅ |
+| Modularização | ✅ |
+| Teste real da modularização | ✅ |
+| `install.sh` | ⬜ |
+
+---
+
 ## 👾 𝕹𝖔 𝖗𝖆𝖉𝖆𝖗 (𝖔 𝖖𝖚𝖊 𝖆𝖎𝖓𝖉𝖆 𝖛𝖊𝖒 𝖕𝖔𝖗 𝖆í)
 
 - [x] Checagem automática de dependências (`fzf`, `tmux`, `figlet`, `lolcat`, `fastfetch`) antes de subir o hub
