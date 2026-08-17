@@ -671,40 +671,6 @@ fi
 
 ---
 
-## 👾 𝕭𝖆𝖈𝖐𝖑𝖔𝖌
-
-Visão geral do que já foi entregue, área por área.
-
-<table cellpadding="12" cellspacing="0" border="1">
-  <tr><th>Área</th><th align="center">Estado</th></tr>
-  <tr><td>Gerenciamento tmux<br></td><td align="center">✅</td></tr>
-  <tr><td>Create Session<br></td><td align="center">✅</td></tr>
-  <tr><td>Attach Session<br></td><td align="center">✅</td></tr>
-  <tr><td>Rename Session<br></td><td align="center">✅</td></tr>
-  <tr><td>Delete Session<br></td><td align="center">✅</td></tr>
-  <tr><td>Banner<br></td><td align="center">✅</td></tr>
-  <tr><td>Retorno automático ao HUB<br></td><td align="center">✅</td></tr>
-  <tr><td><code>Esc</code><br></td><td align="center">✅</td></tr>
-  <tr><td>Refresh<br></td><td align="center">✅</td></tr>
-  <tr><td>Sistema de temas<br></td><td align="center">✅</td></tr>
-  <tr><td>Header Powerline<br></td><td align="center">✅</td></tr>
-  <tr><td>Degradê do Header<br></td><td align="center">✅</td></tr>
-  <tr><td>Nerd Fonts<br></td><td align="center">✅</td></tr>
-  <tr><td>Attach Preview<br></td><td align="center">✅</td></tr>
-  <tr><td>Informações de panes<br></td><td align="center">✅</td></tr>
-  <tr><td>Atalhos no Attach<br></td><td align="center">✅</td></tr>
-  <tr><td>Visual do Attach<br></td><td align="center">✅</td></tr>
-  <tr><td>Powerline do Attach<br></td><td align="center">✅</td></tr>
-  <tr><td>Screenshot<br></td><td align="center">✅</td></tr>
-  <tr><td>README<br></td><td align="center">✅</td></tr>
-  <tr><td>Diário de Bordo<br></td><td align="center">✅</td></tr>
-  <tr><td>Modularização<br></td><td align="center">✅</td></tr>
-  <tr><td>Teste real da modularização<br></td><td align="center">✅</td></tr>
-  <tr><td><code>install.sh</code><br></td><td align="center">⬜</td></tr>
-</table>
-
----
-
 ## 👾 𝕹𝖔 𝖗𝖆𝖉𝖆𝖗 (𝖔 𝖖𝖚𝖊 𝖆𝖎𝖓𝖉𝖆 𝖛𝖊𝖒 𝖕𝖔𝖗 𝖆í)
 
 - [x] Checagem automática de dependências (`fzf`, `tmux`, `figlet`, `lolcat`, `fastfetch`) antes de subir o hub
